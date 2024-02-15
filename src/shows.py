@@ -1,4 +1,4 @@
-from sblog import logger, logging
+from src.sblog import logger, logging
 from plexapi.server import PlexServer
 from arrapi import SonarrAPI, Series, Tag
 from typing import Any, List, Dict, Optional

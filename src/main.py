@@ -6,8 +6,8 @@ from time import perf_counter
 import asyncio
 from contextlib import asynccontextmanager
 import concurrent.futures
-from sblog import logger, logging
-from shows import Shows
+from src.sblog import logger, logging
+from src.shows import Shows
 
 class Config:
     PLEX_URL = None
@@ -96,6 +96,6 @@ async def fix_labels(title: Optional[str] = ''):
 async def plex_series(title: Optional[str] = None, days: Optional[int] = None):
     return await in_thread(lambda: Shows(Config.PLEX_URL, Config.PLEX_TOKEN, Config.SONARR_URL, Config.SONARR_API_KEY).plex_series_search(title=title, days=days), 'plex_series')
 
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000, log_level=logging.INFO)
+# if __name__ == "__main__":
+#     import uvicorn
+#     uvicorn.run(app, host="0.0.0.0", port=8000, log_level=logging.INFO)
