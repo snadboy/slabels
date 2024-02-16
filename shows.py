@@ -1,10 +1,12 @@
-from src.sblog import logger, logging
-from plexapi.server import PlexServer
-from arrapi import SonarrAPI, Series, Tag
 from typing import Any, List, Dict, Optional
 from datetime import datetime as dt, timedelta
+import logging
 
-__all__ = ["Shows"]
+from plexapi.server import PlexServer
+from arrapi import SonarrAPI, Series, Tag
+
+from sblog import logger
+
 class Shows:
     def __init__(
         self, plex_url: str, plex_token: str, sonarr_url: str, sonarr_api_key: str
