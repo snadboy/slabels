@@ -1,4 +1,5 @@
 import logging
+logger = logging.getLogger(__name__)
 
 class Config:
     PLEX_URL = None
@@ -10,6 +11,8 @@ class Config:
     MAX_THREADS = 5
     SYNC_INTERVAL_SECS = 60
 
+    LOGGING_LEVEL = logging.INFO
+    
     @staticmethod
     def initialize():
         import os
@@ -20,10 +23,8 @@ class Config:
 
     @staticmethod
     def log_constants():
-        redact = ['PLEX_TOKEN', 'SONARR_API_KEY']
         constants = {attr: getattr(Config, attr) for attr in dir(Config) if not callable(getattr(Config, attr)) and not attr.startswith("__")}
         for key, value in constants.items():
-            logging.info(f"{key}: {"*****" if key in redact else value}")
+            logging.info(f"{key}: {value}")
 
 Config.initialize()
-Config.log_constants()
