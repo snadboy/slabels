@@ -20,11 +20,26 @@
             "cwd": "${workspaceFolder}"
         },
         {
-            "name": "Python Debugger: Current File",
+            "name": "Python Debugger: File",
             "type": "debugpy",
             "request": "launch",
-            "program": "${file}",
+            "program": "${workspaceFolder}\\app.py",
             "console": "integratedTerminal"
         },
+        {
+            "name": "Docker: Python - Fastapi",
+            "type": "docker",
+            "request": "launch",
+            "preLaunchTask": "docker-run: debug",
+            "python": {
+                "pathMappings": [
+                    {
+                        "localRoot": "${workspaceFolder}",
+                        "remoteRoot": "/app"
+                    }
+                ],
+                "projectType": "fastapi"
+            }
+        }
     ]
 }

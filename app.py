@@ -29,11 +29,6 @@ async def app_lifespan(app: FastAPI):
     try:
         Config.log_constants()
 
-        # Startup tasks
-        executor = concurrent.futures.ThreadPoolExecutor(max_workers=Config.MAX_THREADS)
-        loop = asyncio.get_running_loop()
-        loop.set_default_executor(executor)
-
         task_autosync = asyncio.create_task(autosync())
 
         # Wait for shutdown
@@ -49,11 +44,11 @@ async def autosync():
         while True:
             try:
                 logger.info("Autosync started")
-                results = await asyncio.to_thread(lambda: sonarr_to_plex())
+                results = await asyncio.create_task(sonarr_to_plex())
             except Exception as e:
                 logger.exception(f"Autosync EXCEPTION: {e}")
                 raise
-            await asyncio.sleep(Config.SYNC_INTERVAL_SECS)
+            await asyncio.sleep(Config.SYNC_INTERVAL_MINS * 60)
     except asyncio.CancelledError:
         logger.info("Autosync cancelled")
         raise
@@ -90,11 +85,13 @@ async def plex_series(title: Optional[str] = None, days: Optional[int] = None):
     # return await in_thread(lambda: Shows(Config.PLEX_URL, Config.PLEX_TOKEN, Config.SONARR_URL, Config.SONARR_API_KEY).plex_series_search(title=title, days=days), 'plex_series')
 
 
-# if __name__ == "__main__":
-#     import logging.config
+if __name__ == "__main__":
+    import logging.config
 
-#     logging.config.fileConfig("log_config.ini", disable_existing_loggers=False)
+    logging.config.fileConfig("log_config.ini", disable_existing_loggers=False)
 
-#     import uvicorn
+    import uvicorn
 
-#     uvicorn.run("app:app", host="0.0.0.0", port=8000, log_level=logging.INFO, reload=True),
+    uvicorn.run(
+        "app:app", host="0.0.0.0", port=8000, log_level=logging.INFO, reload=True
+    ),
