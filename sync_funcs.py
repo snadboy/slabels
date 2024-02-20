@@ -51,7 +51,7 @@ async def sonarr_to_plex(days: Optional[int] = None, title: Optional[str] = None
     #               'after' matches 'After The Flood'
 
     logger.info("Syncing: Sonarr tags -> Plex labels")
-    result = {"status": {"error": False, "message": ""}, "search": {"days": days, "title": title, "matches": []}, "changes": []}
+    result = {"status": {"error": False, "message": ""}, "search": {"days": days, "title": title}, "changes": []}
     plex: PlexFuncs = PlexFuncs()
     sonarr: SonarrFuncs = SonarrFuncs()
 

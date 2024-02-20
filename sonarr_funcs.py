@@ -21,7 +21,7 @@ class SonarrFuncs:
         return self.api.all_tags()
 
     def sonarr_all_tags_by_id(self):
-        return {str(tag.id): tag.label for tag in self.api.sonarr_all_tags()}
+        return {str(tag.id): tag.label for tag in self.sonarr_all_tags()}
 
-    def sonarr_tags_by_label(self):
-        return {tag.label: str(tag.id) for tag in self.api.sonarr_all_tags()}
+    def sonarr_all_tags_by_label(self):
+        return {tag.label: str(tag.id) for tag in self.sonarr_all_tags()}
