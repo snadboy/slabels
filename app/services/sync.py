@@ -9,8 +9,8 @@ from typing import Any, Dict, List, Optional
 
 from plexapi.video import Show
 
-from plex_funcs import PlexFuncs
-from sonarr_funcs import Series, SonarrFuncs, Tag
+from services.plex import PlexFuncs
+from services.sonarr import Series, SonarrFuncs, Tag
 
 semaphore_sync = asyncio.Semaphore(5)
 
@@ -96,7 +96,7 @@ async def sonarr_to_plex(days: Optional[int] = None, title: Optional[str] = None
         if len(result["changes"]) == 0:
             result["status"]["message"] = "No changes made"
 
-        logger.info(f"Results: Sonarr tags to Plex labels {result}")
+        logger.info(f"Results: Sonarr tags -> Plex labels {result}")
         return result
     except Exception as e:
         logger.exception(f"Sonarr to Plex EXCEPTION: {e}")

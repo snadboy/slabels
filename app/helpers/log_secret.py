@@ -1,6 +1,6 @@
 import logging
 
-from config import Config
+from helpers.config import Config
 
 
 class SecretFilter(logging.Filter):

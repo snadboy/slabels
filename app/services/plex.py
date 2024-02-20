@@ -8,7 +8,7 @@ from typing import Any, Dict, List, Optional
 from plexapi.library import LibrarySection
 from plexapi.server import PlexServer
 
-from config import Config
+from helpers.config import Config
 
 
 class PlexFuncs:

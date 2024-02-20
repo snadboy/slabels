@@ -7,9 +7,9 @@ import asyncio
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import JSONResponse
 
-from enums import SonarrEventType
-from sonarr_funcs import SonarrFuncs
-from sync_funcs import sonarr_to_plex
+from helpers.enums import SonarrEventType
+from services.sonarr import SonarrFuncs
+from services.sync import sonarr_to_plex
 
 router = APIRouter()
 

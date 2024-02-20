@@ -6,7 +6,7 @@ from typing import Optional
 
 from fastapi import APIRouter, HTTPException
 
-from sync_funcs import sonarr_to_plex
+from services.sync import sonarr_to_plex
 
 router = APIRouter()
 

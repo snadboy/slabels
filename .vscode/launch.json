@@ -23,7 +23,7 @@
             "name": "Python Debugger: File",
             "type": "debugpy",
             "request": "launch",
-            "program": "${workspaceFolder}\\app.py",
+            "program": "${workspaceFolder}\\app\\main.py",
             "console": "integratedTerminal"
         },
         {
