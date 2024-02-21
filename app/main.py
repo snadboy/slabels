@@ -53,15 +53,15 @@ async def autosync():
     try:
         while True:
             try:
-                logger.info("Autosync started")
+                logger.info("Autosync task started")
                 results = await asyncio.create_task(sonarr_to_plex())
             except Exception as e:
                 logger.exception(f"Autosync EXCEPTION: {e}")
                 raise
             await asyncio.sleep(Config.SYNC_INTERVAL_MINS * 60)
     except asyncio.CancelledError:
-        logger.info("Autosync cancelled")
-        raise
+        logger.info("Autosync task cancelled")
+        
     
 if __name__ == "__main__":
     import logging.config
