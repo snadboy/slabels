@@ -7,7 +7,7 @@ from typing import Any, Dict, List, Optional
 
 from arrapi import Series, SonarrAPI, Tag
 
-from helpers.config import Config
+from app.helpers.config import Config
 
 
 class SonarrFuncs:

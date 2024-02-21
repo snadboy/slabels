@@ -1,11 +1,9 @@
-import os
-print(f"cwd: {os.getcwd()}")
-
 import logging
 import logging.config
 from importlib import import_module
 
-from helpers.log_secret import SecretFilter
+from app.services.sync import sonarr_to_plex
+from app.helpers.log_secret import SecretFilter
 
 # logging.config.fileConfig("app/log_config.ini", disable_existing_loggers=False)
 logging.getLogger().addFilter(SecretFilter())
@@ -13,23 +11,23 @@ logger = logging.getLogger(__name__)
 
 import asyncio
 
-# import concurrent.futures
 from contextlib import asynccontextmanager
 from pathlib import Path
-from time import perf_counter
 
 from fastapi import FastAPI
 
-from helpers.config import Config
-from services.sync import sonarr_to_plex
+from app.helpers.config import Config
+from app.services.sync import sonarr_to_plex
 
 @asynccontextmanager
 async def app_lifespan(app: FastAPI):
     task_autosync = None
 
     try:
+        logger.info("Adding routers to API")
+
         for router_file in Path('app/routers').rglob('*.py'):
-            router_import = f'routers.{router_file.stem}'
+            router_import = f'app.routers.{router_file.stem}'
             logger.info(f"Importing {router_import}")
             router_module = import_module(router_import)
             app.include_router(router_module.router)
@@ -61,16 +59,4 @@ async def autosync():
             await asyncio.sleep(Config.SYNC_INTERVAL_MINS * 60)
     except asyncio.CancelledError:
         logger.info("Autosync task cancelled")
-        
-    
-if __name__ == "__main__":
-    import logging.config
-
-    logging.config.fileConfig("app/log_config.ini", disable_existing_loggers=False)
-
-    import uvicorn
-
-    # TODO uvicorn needs to use log_config.ini for logging
-    uvicorn.run(
-        "main:app", host="0.0.0.0", port=8001, log_level=logging.INFO, reload=False, log_config="app/log_config.ini"
-    ),
+            

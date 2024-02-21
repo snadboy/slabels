@@ -6,25 +6,18 @@
             "request": "launch",
             "module": "uvicorn",
             "args": [
-                "app:app",
+                "app.main:app",
                 "--reload",
                 "--host",
                 "0.0.0.0",
                 "--port",
                 "8000",
                 "--log-config",
-                "log_config.ini"
+                "app/log_config.ini"
             ],
             "jinja": true,
             "justMyCode": false,
             "cwd": "${workspaceFolder}"
-        },
-        {
-            "name": "Python Debugger: File",
-            "type": "debugpy",
-            "request": "launch",
-            "program": "${workspaceFolder}\\app\\main.py",
-            "console": "integratedTerminal"
         },
         {
             "name": "Docker: Python - Fastapi",

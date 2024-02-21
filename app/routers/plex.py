@@ -6,7 +6,7 @@ from typing import Optional
 
 from fastapi import APIRouter, HTTPException
 
-from services.plex import PlexFuncs
+from app.services.plex import PlexFuncs
 
 router = APIRouter()
 

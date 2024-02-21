@@ -9,8 +9,8 @@ from typing import Any, Dict, List, Optional
 
 from plexapi.video import Show
 
-from services.plex import PlexFuncs
-from services.sonarr import Series, SonarrFuncs, Tag
+from app.services.plex import PlexFuncs
+from app.services.sonarr import Series, SonarrFuncs, Tag
 
 semaphore_sync = asyncio.Semaphore(5)
 
