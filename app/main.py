@@ -51,7 +51,7 @@ async def autosync():
     try:
         while True:
             try:
-                logger.info("Autosync task started")
+                logger.info("Autosync task has started")
                 results = await asyncio.create_task(sonarr_to_plex())
             except Exception as e:
                 logger.exception(f"Autosync EXCEPTION: {e}")
