@@ -12,7 +12,7 @@ router = APIRouter()
 
 @router.get("/plex_series/")
 async def plex_series(title: Optional[str] = None, days: Optional[int] = None):
-    # TODO: add comments
+    # TODO: add comment
     if days and days < 0:
         raise HTTPException(status_code=400, detail=f"Invalid value for days: {days} - if present, it must be zero or a positive integer")
 
