@@ -41,11 +41,11 @@ jobs:
     - name: Install jq
       run: sudo apt-get install jq
 
-    # Keep only the last three images
+    # Keep only last three images
     - name: Keep only last three images
       run: |
-        versions=$(gh api user/packages/container/slabels/versions --paginate | jq -r '.[] | .name')
+        versions=$(curl -s -H "Authorization: token ${{ secrets.GHCR_PA_TOKEN }}" https://api.github.com/user/packages/container/slabels/versions | jq -r '.[].id')
         versions_to_delete=$(echo "$versions" | sort -r | tail -n +4)
         for version in $versions_to_delete; do
-          gh api -X DELETE user/packages/container/slabels/versions/$version
+          curl -X DELETE -H "Authorization: token ${{ secrets.GHCR_PA_TOKEN }}" -H "Accept: application/vnd.github.v3+json" https://api.github.com/user/packages/container/slabels/versions/$version
         done
