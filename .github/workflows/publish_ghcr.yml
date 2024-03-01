@@ -39,7 +39,7 @@ jobs:
     - name: Install jq
       run: sudo apt-get install jq
 
-    # Keep only last three images
+    # Keep only the last three images
     - name: Keep only last three images
       run: |
         versions=$(gh api user/packages/container/slabels/versions --paginate | jq -r '.[] | .name')
