@@ -43,7 +43,7 @@ async def sonarr_to_plex_task(plex_show: Show, sonarr_series: Dict[str, Series],
     async with semaphore_sync:
         return await asyncio.to_thread(sonarr_to_plex_thread, plex_show, sonarr_series, tag_dict)
 
-async def sonarr_to_plex(days: Optional[int] = None, title: Optional[str] = None):
+async def sonarr_to_plex(days: Optional[int] = None, title: Optional[str] = None) -> Dict[str, Any]:
     # days - Number of days since TV Show added to Plex, e.g.
     #           if days = 30, search for shows added in the last 30 days
     # title - Title of show to match
@@ -52,11 +52,11 @@ async def sonarr_to_plex(days: Optional[int] = None, title: Optional[str] = None
 
     logger.info("Syncing: Sonarr tags -> Plex labels")
     result = {"status": {"error": False, "message": ""}, "search": {"days": days, "title": title}, "changes": []}
-    plex: PlexFuncs = PlexFuncs()
-    sonarr: SonarrFuncs = SonarrFuncs()
-
-    # Get list of Plex shows to process
     try:
+        plex: PlexFuncs = PlexFuncs()
+        sonarr: SonarrFuncs = SonarrFuncs()
+
+        # Get list of Plex shows to process
         advancedFilters: Dict[str, List] = {
             "and": []
         }  # Match all of the following in this list

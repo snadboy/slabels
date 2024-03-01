@@ -13,7 +13,11 @@ from app.helpers.config import Config
 
 class PlexFuncs:
     def __init__(self):
-        self.api = PlexServer(Config.PLEX_URL, Config.PLEX_TOKEN)
+        try:
+            self.api = PlexServer(Config.PLEX_URL, Config.PLEX_TOKEN) 
+        except Exception as e:
+            logger.exception(e)
+            raise e
 
     def plex_series_search(
         self, title: Optional[str] = None, days: Optional[int] = None

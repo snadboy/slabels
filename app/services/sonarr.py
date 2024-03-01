@@ -12,7 +12,11 @@ from app.helpers.config import Config
 
 class SonarrFuncs:
     def __init__(self):
-        self.api = SonarrAPI(Config.SONARR_URL, Config.SONARR_API_KEY)
+        try:
+            self.api = SonarrAPI(Config.SONARR_URL, Config.SONARR_API_KEY)
+        except Exception as e:
+            logger.exception(e)
+            raise e
 
     def sonarr_all_series(self) -> Dict[str, Series]:
         return {str(series.title): series for series in self.api.all_series()}
