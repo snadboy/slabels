@@ -33,7 +33,9 @@ jobs:
 
     # Make Docker image public
     - name: Make Docker image public
-      run: gh package update snadboy/slabels --public
+      run: |
+        package_id=$(curl -s -H "Authorization: token ${{ secrets.GHCR_PA_TOKEN }}" https://api.github.com/user/packages/container/slabels/versions | jq -r '.[0].id')
+        curl -X PATCH -H "Authorization: token ${{ secrets.GHCR_PA_TOKEN }}" -H "Accept: application/vnd.github.v3+json" https://api.github.com/user/packages/container/slabels/versions/$package_id -d '{"visibility":"public"}'
 
     # Install jq for JSON processing
     - name: Install jq
