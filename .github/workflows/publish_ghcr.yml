@@ -44,8 +44,8 @@ jobs:
     # Keep only last three images
     - name: Keep only last three images
       run: |
-        versions=$(curl -s -H "Authorization: token ${{ secrets.GHCR_PA_TOKEN }}" https://api.github.com/user/packages/container/slabels/versions | jq -r '.[].id')
-        versions_to_delete=$(echo "$versions" | sort -r | tail -n +4)
+        package_versions=$(gh package version list --package-type container --repo snadboy/slabels --limit 100)
+        versions_to_delete=$(echo "$package_versions" | jq -r '.[].id' | sort -r | tail -n +4)
         for version in $versions_to_delete; do
-          curl -X DELETE -H "Authorization: token ${{ secrets.GHCR_PA_TOKEN }}" -H "Accept: application/vnd.github.v3+json" https://api.github.com/user/packages/container/slabels/versions/$version
+          gh package version delete --package-type container --repo snadboy/slabels --version-id $version --confirm
         done
