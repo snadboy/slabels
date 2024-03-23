@@ -1,4 +1,6 @@
 import logging
+
+from requests import Session
 logger = logging.getLogger(__name__)
 
 from datetime import datetime as dt
@@ -14,7 +16,13 @@ from app.helpers.config import Config
 class PlexFuncs:
     def __init__(self):
         try:
-            self.api = PlexServer(Config.PLEX_URL, Config.PLEX_TOKEN) 
+            session = Session()
+            for key, value in Config.HEADERS_SONARR.items():
+                session.headers[key] = value
+            for key, value in Config.HEADERS_ALL.items():
+                session.headers[key] = value
+
+            self.api = PlexServer(baseurl=Config.PLEX_URL, token=Config.PLEX_TOKEN, session=session) 
         except Exception as e:
             logger.exception(e)
             raise e

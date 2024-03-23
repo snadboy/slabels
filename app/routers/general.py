@@ -16,4 +16,10 @@ start_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 async def root(request: Request):
     server_ip = request.client.host
     server_port = request.client.port    
-    return {"message": f"Server up since {start_time} @ {request.base_url}"}  
+    return {"message": f"[GET] Server up since {start_time} @ {request.base_url}"}  
+
+@router.post("/")
+async def root(request: Request):
+    server_ip = request.client.host
+    server_port = request.client.port    
+    return {"message": f"[POST] Server up since {start_time} @ {request.base_url}"}  
